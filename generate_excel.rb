@@ -4,6 +4,13 @@ load 'Question.rb'
 
 Spreadsheet.client_encoding = 'UTF-8'
 
+def getSortedArrayFromString(str)
+  arr = (str == nil ? [] : (str.split(',').map!(&:strip)))
+  arr.sort!
+  return arr
+end
+
+
 # Build a new instance of Question class and populate
 # data from the row.
 def getQuestionFromRow(row)
@@ -17,7 +24,7 @@ def getQuestionFromRow(row)
 
   question.test_name = row[1]
   question.category = row[2]
-  question.tags = row[3]
+  question.tags = getSortedArrayFromString(row[3])
   question.directions = row[4]
   question.question_text = row[5]
   question.question_image = row[6]
@@ -33,17 +40,37 @@ puts book
 sheet = book.worksheet 0
 puts sheet
 questions = []
+category_questions_hash = {}
 
 sheet.each_with_index do |row,index|
-  next if index == 0
+  next if index == 0 || index > 18
   questions.push getQuestionFromRow(row)
 end
 
-puts questions[1].category
-
 questions.each do |question|
-    question.print   
+
+  tags_string = question.tags.join(",")
+  category_string = question.category
+  
+  if category_questions_hash[category_string] == nil
+    category_questions_hash[category_string] = {}
+  end
+
+  if category_questions_hash[category_string][tags_string] == nil
+    category_questions_hash[category_string][tags_string] = []
+  end
+  
+  category_questions_hash[category_string][tags_string].push question
 end
 
+category_questions_hash.each do |category,tags_string_hash|
+  puts category
 
+  tags_string_hash.each do |tag_string,questions|
 
+    # questions => 400
+
+    puts "  " + tag_string + " => " + questions.count.to_s
+  end
+end
+#puts category_questions_hash.keys

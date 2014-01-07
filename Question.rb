@@ -6,7 +6,7 @@ class Question
 	def print
 		puts "#" + question_no.to_s + "\n"
 		puts "Category :" + category
-		puts "Tags :" + (tags == nil ? "nil" : tags )
+		puts "Tags :" + tags.to_s
 		puts "Question :" + question_text
 		puts "Options :" + "\n"
 		puts "A" + (correct_answer == 1 ? "*" : "" ) + ":" + options[0].to_s
@@ -17,14 +17,6 @@ class Question
 	end
 end
 
-
-#q = Question.new
-
-#q.question_no = 5
-#q.options.push(123)
-
-#puts q.question_no.inspect
-#puts q.options
 
 
     
