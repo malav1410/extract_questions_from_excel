@@ -15,6 +15,7 @@ class Question
 		puts "D" + (correct_answer == 4 ? "*" : "" ) + ":" + options[3].to_s
 		puts "\n\n"
 	end
+end
 
 
 
