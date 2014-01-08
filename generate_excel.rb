@@ -43,7 +43,7 @@ questions = []
 category_questions_hash = {}
 
 sheet.each_with_index do |row,index|
-  next if index == 0 || index > 18
+  next if index == 0 || index > 500
   questions.push getQuestionFromRow(row)
 end
 
@@ -67,10 +67,10 @@ category_questions_hash.each do |category,tags_string_hash|
   puts category
 
   tags_string_hash.each do |tag_string,questions|
-
-    # questions => 400
-
     puts "  " + tag_string + " => " + questions.count.to_s
+    array_of_questions_array = questions.each_slice(20).to_a
+    puts "  " + tag_string + " => " + array_of_questions_array.to_s
   end
 end
+
 #puts category_questions_hash.keys
